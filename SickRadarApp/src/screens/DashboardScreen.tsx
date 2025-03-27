@@ -1,18 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   View, 
-  Text, 
   StyleSheet, 
-  TouchableOpacity, 
   ScrollView, 
   RefreshControl,
   Alert,
-  ActivityIndicator 
+  ActivityIndicator,
+  Text,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect } from '@react-navigation/native';
 import { RootStackParamList } from '../../App';
 import ApiService, { CurrentData, RadarStatus } from '../services/api';
+import Header from '../components/Header';
+import StatusBadge from '../components/StatusBadge';
+import MetricCard from '../components/MetricCard';
+import RealTimeChart from '../components/RealTimeChart';
+import { colors, spacing } from '../styles/theme';
 
 type DashboardScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Dashboard'>;
 
@@ -23,264 +31,463 @@ const DashboardScreen: React.FC = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-  // Function to load data
+  
+  // Estado para histórico de velocidades para o mini-gráfico
+  const [velocityHistory, setVelocityHistory] = useState<Array<Array<number>>>([[], [], [], [], [], [], []]);
+  const maxHistoryPoints = 20; // Número máximo de pontos no histórico
+  
+  // Ref para armazenar os últimos dados para comparação
+  const lastDataRef = useRef<CurrentData | null>(null);
+  
+  // Função para carregar dados
   const loadData = async () => {
     try {
       setError(null);
       
-      // Get radar status
+      // Obter status do radar
       const status = await ApiService.getStatus();
       setRadarStatus(status);
       
-      // Get current data
+      // Obter dados atuais
       const currentData = await ApiService.getCurrentData();
-      setRadarData(currentData);
+      
+      // Atualizar histórico de velocidades
+      if (currentData) {
+        updateVelocityHistory(currentData);
+        setRadarData(currentData);
+      }
     } catch (err) {
-      setError('Failed to load radar data. Check your connection.');
-      console.error('Error loading data:', err);
+      setError('Falha ao carregar dados do radar. Verifique sua conexão.');
+      console.error('Erro ao carregar dados:', err);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
   };
-
-  // Load data on component mount
+  
+  // Atualizar histórico de velocidades
+  const updateVelocityHistory = (data: CurrentData) => {
+    setVelocityHistory(prev => {
+      const newHistory = [...prev];
+      
+      // Adicionar novos valores ao histórico
+      data.velocities.forEach((velocity, index) => {
+        newHistory[index] = [...prev[index], velocity];
+        
+        // Limitar tamanho do histórico
+        if (newHistory[index].length > maxHistoryPoints) {
+          newHistory[index] = newHistory[index].slice(-maxHistoryPoints);
+        }
+      });
+      
+      return newHistory;
+    });
+  };
+  
+  // Calcular tendência para uma velocidade
+  const getVelocityTrend = (index: number): { trend: 'up' | 'down' | 'stable' | null, value: number } => {
+    if (!radarData || !lastDataRef.current) {
+      return { trend: null, value: 0 };
+    }
+    
+    const current = radarData.velocities[index];
+    const previous = lastDataRef.current.velocities[index];
+    const diff = current - previous;
+    
+    // Se a diferença for muito pequena, considerar estável
+    if (Math.abs(diff) < 0.01) {
+      return { trend: 'stable', value: 0 };
+    }
+    
+    return {
+      trend: diff > 0 ? 'up' : 'down',
+      value: diff
+    };
+  };
+  
+  // Função para configurar subscription de dados em tempo real
+  const setupRealTimeUpdates = () => {
+    // Subscrever para atualizações de status
+    const unsubscribeStatus = ApiService.subscribeToStatus((status) => {
+      setRadarStatus(status);
+    });
+    
+    // Subscrever para atualizações de dados
+    const unsubscribeData = ApiService.subscribeToCurrentData((data) => {
+      // Armazenar dados atuais para comparação
+      lastDataRef.current = radarData;
+      
+      // Atualizar dados
+      setRadarData(data);
+      
+      // Atualizar histórico
+      updateVelocityHistory(data);
+    });
+    
+    return () => {
+      unsubscribeStatus();
+      unsubscribeData();
+    };
+  };
+  
+  // Carregar dados ao montar o componente
   useEffect(() => {
     loadData();
     
-    // Set up polling for real-time updates (every 2 seconds)
-    const interval = setInterval(() => {
-      loadData();
-    }, 2000);
+    // Configurar atualizações em tempo real
+    const unsubscribe = setupRealTimeUpdates();
     
-    // Clean up interval on unmount
-    return () => clearInterval(interval);
+    return () => {
+      unsubscribe();
+    };
   }, []);
-
-  // Handle manual refresh
+  
+  // Recarregar dados quando a tela estiver em foco
+  useFocusEffect(
+    useCallback(() => {
+      loadData();
+      return () => {
+        // Cleanup
+      };
+    }, [])
+  );
+  
+  // Verificar conexão WebSocket
+  const checkWebSocketConnection = () => {
+    const isConnected = ApiService.isWebSocketConnected();
+    if (!isConnected) {
+      Alert.alert(
+        'Aviso',
+        'A conexão WebSocket está desconectada. Deseja tentar reconectar?',
+        [
+          {
+            text: 'Sim',
+            onPress: async () => {
+              try {
+                await ApiService.reconnectWebSocket();
+                Alert.alert('Sucesso', 'Reconexão realizada com sucesso.');
+              } catch (error) {
+                Alert.alert('Erro', 'Falha na reconexão. Tente novamente mais tarde.');
+              }
+            }
+          },
+          {
+            text: 'Não',
+            style: 'cancel'
+          }
+        ]
+      );
+    } else {
+      Alert.alert('Informação', 'Conexão WebSocket ativa.');
+    }
+  };
+  
+  // Ir para tela de detalhes de velocidade
+  const navigateToVelocityDetails = (index: number) => {
+    navigation.navigate('VelocityDetails', { index });
+  };
+  
+  // Atualizar manualmente
   const onRefresh = () => {
     setRefreshing(true);
     loadData();
   };
-
-  // Format timestamp
+  
+  // Formatar timestamp
   const formatTimestamp = (timestamp: string | undefined) => {
-    if (!timestamp) return 'Unknown';
+    if (!timestamp) return 'Desconhecido';
     const date = new Date(parseInt(timestamp));
     return date.toLocaleString();
   };
-
-  // Get status color
-  const getStatusColor = (status: string | undefined) => {
-    if (!status) return '#999';
-    switch (status.toLowerCase()) {
-      case 'ok':
-        return '#4CAF50';
-      case 'obstruido':
-        return '#FFC107';
-      case 'falha_comunicacao':
-        return '#F44336';
-      default:
-        return '#999';
-    }
-  };
-
-  // Navigate to velocity details
-  const navigateToVelocityDetails = (index: number) => {
-    navigation.navigate('VelocityDetails', { index });
-  };
-
-  // If loading
+  
+  // Renderizar indicador de carregamento
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#2196F3" />
-        <Text style={styles.loadingText}>Loading radar data...</Text>
+        <Header title="SICK Radar Monitor" showStatus={false} />
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>Carregando dados do radar...</Text>
       </View>
     );
   }
-
-  // If error
+  
+  // Renderizar tela de erro
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>{error}</Text>
-        <TouchableOpacity style={styles.retryButton} onPress={loadData}>
-          <Text style={styles.retryButtonText}>Retry</Text>
-        </TouchableOpacity>
+        <Header title="SICK Radar Monitor" showStatus={false} />
+        <View style={styles.errorContent}>
+          <Ionicons name="warning-outline" size={64} color={colors.error} />
+          <Text style={styles.errorText}>{error}</Text>
+          <TouchableOpacity style={styles.retryButton} onPress={loadData}>
+            <Text style={styles.retryButtonText}>Tentar novamente</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
-
-  return (
-    <ScrollView 
-      style={styles.container}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+  
+  // Determinar qual velocidade tem o maior valor para o gráfico de destaque
+  let featuredVelocityIndex = 0;
+  let maxVelocity = -Infinity;
+  
+  if (radarData) {
+    radarData.velocities.forEach((velocity, index) => {
+      if (Math.abs(velocity) > Math.abs(maxVelocity)) {
+        maxVelocity = velocity;
+        featuredVelocityIndex = index;
       }
-    >
-      {/* Status Card */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Radar Status</Text>
-        <View style={styles.statusContainer}>
-          <View 
-            style={[
-              styles.statusIndicator, 
-              { backgroundColor: getStatusColor(radarStatus?.status) }
-            ]} 
+    });
+  }
+  
+  return (
+    <View style={styles.container}>
+      <Header 
+        title="SICK Radar Monitor" 
+        showStatus={true} 
+        status={radarStatus?.status || 'desconhecido'}
+        rightIcon="refresh"
+        onRightPress={loadData}
+      />
+      
+      <ScrollView 
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
+        {/* Status Card */}
+        <View style={styles.statusCard}>
+          <View style={styles.statusHeader}>
+            <Text style={styles.sectionTitle}>Status do Sistema</Text>
+            <StatusBadge status={radarStatus?.status || 'desconhecido'} large />
+          </View>
+          <Text style={styles.timestamp}>
+            Última atualização: {formatTimestamp(radarStatus?.timestamp)}
+          </Text>
+          
+          {radarStatus?.lastError && (
+            <View style={styles.errorInfo}>
+              <Ionicons name="information-circle-outline" size={16} color={colors.warning} />
+              <Text style={styles.errorInfoText}>{radarStatus.lastError}</Text>
+            </View>
+          )}
+        </View>
+        
+        {/* Gráfico de Velocidade em Destaque */}
+        {radarData && (
+          <RealTimeChart
+            title={`Velocidade ${featuredVelocityIndex + 1} (Tempo Real)`}
+            data={velocityHistory[featuredVelocityIndex]}
+            color={colors.velocity[featuredVelocityIndex]}
+            yAxisSuffix=" m/s"
+            bezier
+            height={200}
           />
-          <Text style={styles.statusText}>
-            {radarStatus?.status || 'Unknown'}
+        )}
+        
+        {/* Velocidades Grid */}
+        <Text style={styles.sectionTitle}>Velocidades (m/s)</Text>
+        <View style={styles.metricsGrid}>
+          {radarData?.velocities.map((velocity, index) => {
+            const { trend, value } = getVelocityTrend(index);
+            return (
+              <MetricCard
+                key={`vel-${index}`}
+                title={`Velocidade ${index + 1}`}
+                value={velocity}
+                unit="m/s"
+                color={colors.velocity[index]}
+                trend={trend}
+                trendValue={value}
+                precision={3}
+                onPress={() => navigateToVelocityDetails(index + 1)}
+              />
+            );
+          })}
+        </View>
+        
+        {/* Posições Grid */}
+        <Text style={styles.sectionTitle}>Posições (m)</Text>
+        <View style={styles.metricsGrid}>
+          {radarData?.positions.map((position, index) => (
+            <MetricCard
+              key={`pos-${index}`}
+              title={`Posição ${index + 1}`}
+              value={position}
+              unit="m"
+              color={colors.position[index]}
+              precision={3}
+            />
+          ))}
+        </View>
+        
+        {/* Informações de conexão */}
+        <View style={styles.connectionInfo}>
+          <Text style={styles.connectionStatus}>
+            Estado WebSocket: {ApiService.isWebSocketConnected() ? 
+            <Text style={{ color: colors.success }}>Conectado</Text> : 
+            <Text style={{ color: colors.error }}>Desconectado</Text>}
+          </Text>
+          <TouchableOpacity 
+            style={styles.connectionButton} 
+            onPress={checkWebSocketConnection}
+          >
+            <Text style={styles.connectionButtonText}>Verificar conexão</Text>
+          </TouchableOpacity>
+        </View>
+        
+        {/* Dica de uso */}
+        <View style={styles.tipContainer}>
+          <Ionicons name="information-circle-outline" size={20} color={colors.info} />
+          <Text style={styles.tipText}>
+            Toque em qualquer velocidade para ver detalhes e histórico.
           </Text>
         </View>
-        <Text style={styles.timestamp}>
-          Last Updated: {formatTimestamp(radarStatus?.timestamp)}
-        </Text>
-      </View>
-
-      {/* Velocities Card */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Velocities (m/s)</Text>
-        <View style={styles.gridContainer}>
-          {radarData?.velocities.map((velocity, index) => (
-            <TouchableOpacity
-              key={`vel-${index}`}
-              style={styles.gridItem}
-              onPress={() => navigateToVelocityDetails(index + 1)}
-            >
-              <Text style={styles.gridItemTitle}>Vel {index + 1}</Text>
-              <Text style={styles.gridItemValue}>{velocity.toFixed(3)}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
-
-      {/* Positions Card */}
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Positions (m)</Text>
-        <View style={styles.gridContainer}>
-          {radarData?.positions.map((position, index) => (
-            <View key={`pos-${index}`} style={styles.gridItem}>
-              <Text style={styles.gridItemTitle}>Pos {index + 1}</Text>
-              <Text style={styles.gridItemValue}>{position.toFixed(3)}</Text>
-            </View>
-          ))}
-        </View>
-      </View>
-      
-      {/* Help Text */}
-      <Text style={styles.helpText}>
-        Tap on any velocity value to see details and history.
-      </Text>
-
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background,
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: colors.background,
   },
   loadingText: {
     marginTop: 16,
     fontSize: 16,
-    color: '#666',
+    color: colors.text.secondary,
+    textAlign: 'center',
   },
   errorContainer: {
     flex: 1,
+    backgroundColor: colors.background,
+  },
+  errorContent: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f5f5f5',
     padding: 20,
   },
   errorText: {
     fontSize: 16,
-    color: '#F44336',
+    color: colors.error,
     textAlign: 'center',
+    marginTop: 16,
     marginBottom: 20,
   },
   retryButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: colors.primary,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: 5,
+    borderRadius: 8,
   },
   retryButtonText: {
-    color: 'white',
+    color: colors.text.inverse,
     fontSize: 16,
     fontWeight: 'bold',
   },
-  card: {
-    backgroundColor: 'white',
+  statusCard: {
+    backgroundColor: colors.surface,
+    margin: spacing.m,
+    padding: spacing.m,
+    borderRadius: 12,
+    ...styles.elevation,
+  },
+  statusHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: spacing.s,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: colors.text.primary,
+    marginHorizontal: spacing.m,
+    marginTop: spacing.m,
+    marginBottom: spacing.s,
+  },
+  timestamp: {
+    fontSize: 14,
+    color: colors.text.secondary,
+  },
+  errorInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: spacing.s,
+    backgroundColor: `${colors.warning}20`,
+    padding: spacing.s,
+    borderRadius: 4,
+  },
+  errorInfoText: {
+    fontSize: 14,
+    color: colors.text.secondary,
+    marginLeft: spacing.xs,
+    flex: 1,
+  },
+  metricsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginHorizontal: spacing.s,
+  },
+  connectionInfo: {
+    backgroundColor: colors.surface,
+    margin: spacing.m,
+    padding: spacing.m,
+    borderRadius: 12,
+    ...styles.elevation,
+    alignItems: 'center',
+  },
+  connectionStatus: {
+    fontSize: 16,
+    color: colors.text.primary,
+    marginBottom: spacing.m,
+  },
+  connectionButton: {
+    backgroundColor: colors.primary,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 8,
-    padding: 16,
-    margin: 16,
-    marginBottom: 8,
+  },
+  connectionButtonText: {
+    color: colors.text.inverse,
+    fontWeight: 'bold',
+  },
+  tipContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: spacing.m,
+    marginBottom: spacing.m,
+    padding: spacing.m,
+    backgroundColor: `${colors.info}10`,
+    borderRadius: 8,
+  },
+  tipText: {
+    fontSize: 14,
+    color: colors.text.secondary,
+    marginLeft: spacing.s,
+    flex: 1,
+  },
+  elevation: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 16,
-    color: '#333',
-  },
-  statusContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  statusIndicator: {
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    marginRight: 8,
-  },
-  statusText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textTransform: 'capitalize',
-  },
-  timestamp: {
-    fontSize: 14,
-    color: '#666',
-    marginTop: 8,
-  },
-  gridContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginHorizontal: -8,
-  },
-  gridItem: {
-    width: '33.33%',
-    padding: 8,
-  },
-  gridItemTitle: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 4,
-  },
-  gridItemValue: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  helpText: {
-    textAlign: 'center',
-    color: '#666',
-    fontSize: 14,
-    margin: 16,
   },
 });
 

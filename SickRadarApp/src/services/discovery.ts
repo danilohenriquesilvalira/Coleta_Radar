@@ -27,12 +27,18 @@ class DiscoveryService {
   private isDiscovering: boolean = false;
   private manualServers: ServerInfo[] = [];
   private lastUsedServer: ServerInfo | null = null;
+  private discoveryTimeout: NodeJS.Timeout | null = null;
 
   constructor() {
     // Inicializar Zeroconf se não estiver na web
     if (Platform.OS !== 'web') {
-      this.zeroconf = new Zeroconf();
-      this.setupZeroconf();
+      try {
+        this.zeroconf = new Zeroconf();
+        this.setupZeroconf();
+      } catch (error) {
+        console.error('Erro ao inicializar Zeroconf:', error);
+        // Continuar mesmo sem Zeroconf
+      }
     }
 
     // Carregar servidores salvos
@@ -81,8 +87,13 @@ class DiscoveryService {
     
     this.isDiscovering = true;
     
-    // Limpar lista de servidores descobertos
-    this.discoveredServers = [];
+    // Limpar timeout anterior se existir
+    if (this.discoveryTimeout) {
+      clearTimeout(this.discoveryTimeout);
+    }
+    
+    // Limpar lista de servidores descobertos (mantendo os manuais)
+    this.discoveredServers = [...this.manualServers];
     
     // Usar Zeroconf se disponível
     if (this.zeroconf) {
@@ -96,6 +107,11 @@ class DiscoveryService {
 
     // Descoberta manual via IP na rede local
     this.discoverManually();
+    
+    // Definir timeout para parar a descoberta após 10 segundos
+    this.discoveryTimeout = setTimeout(() => {
+      this.stopDiscovery();
+    }, 10000);
   }
 
   // Parar descoberta
@@ -110,7 +126,13 @@ class DiscoveryService {
       }
     }
     
+    if (this.discoveryTimeout) {
+      clearTimeout(this.discoveryTimeout);
+      this.discoveryTimeout = null;
+    }
+    
     this.isDiscovering = false;
+    console.log('Descoberta de servidores finalizada');
   }
 
   // Descoberta manual na rede local
@@ -145,11 +167,20 @@ class DiscoveryService {
           const baseIP = gateway.substring(0, gateway.lastIndexOf('.') + 1);
           
           // Verificar os primeiros 20 IPs na mesma subrede
+          const checkPromises: Promise<void>[] = [];
           for (let i = 1; i <= 20; i++) {
             const ip = `${baseIP}${i}`;
             for (const port of commonPorts) {
-              this.probeServer(ip, port);
+              checkPromises.push(this.probeServer(ip, port));
             }
+          }
+          
+          // Realizar verificações em paralelo com limite de concorrência
+          // Verificar em grupos de 5 para não sobrecarregar a rede
+          for (let i = 0; i < checkPromises.length; i += 5) {
+            await Promise.all(checkPromises.slice(i, i + 5));
+            // Pequena pausa entre grupos de verificação
+            await new Promise(resolve => setTimeout(resolve, 50));
           }
         }
       }
@@ -161,24 +192,36 @@ class DiscoveryService {
   // Verificar se um servidor responde na porta esperada
   private async probeServer(ip: string, port: number): Promise<void> {
     try {
-      const url = `http://${ip}:${port}/api/discover`;
+      // Primeiro, verificar se a porta está aberta com timeout curto
+      const url = `http://${ip}:${port}/health`;
       const response = await axios.get(url, { timeout: 1000 });
       
-      if (response.data) {
-        const { name, wsUrl, apiUrl, version } = response.data;
-        
-        const server: ServerInfo = {
-          name: name || 'SICK Radar Monitor',
-          ip,
-          port,
-          wsUrl: wsUrl || `ws://${ip}:${port}/ws`,
-          apiUrl: apiUrl || `http://${ip}:${port}/api`,
-          version: version || '1.0.0',
-          manual: true,
-          lastConnected: Date.now()
-        };
-        
-        this.addDiscoveredServer(server);
+      if (response.status === 200) {
+        try {
+          // Verificar se é realmente nosso servidor com endpoint /api/discover
+          const discoverUrl = `http://${ip}:${port}/api/discover`;
+          const discoverResponse = await axios.get(discoverUrl, { timeout: 1000 });
+          
+          if (discoverResponse.data) {
+            const { name, wsUrl, apiUrl, version } = discoverResponse.data;
+            
+            const server: ServerInfo = {
+              name: name || 'SICK Radar Monitor',
+              ip,
+              port,
+              wsUrl: wsUrl || `ws://${ip}:${port}/ws`,
+              apiUrl: apiUrl || `http://${ip}:${port}/api`,
+              version: version || '1.0.0',
+              manual: false,  // Descoberto automaticamente
+              lastConnected: Date.now()
+            };
+            
+            this.addDiscoveredServer(server);
+            console.log(`Servidor encontrado: ${ip}:${port} (${name || 'SICK Radar Monitor'})`);
+          }
+        } catch (error) {
+          // Não é nosso servidor, ignorar
+        }
       }
     } catch (error) {
       // Silenciosamente ignorar erros de conexão (esperado para a maioria dos IPs)
@@ -195,10 +238,12 @@ class DiscoveryService {
         // Atualizar timestamp
         server.lastConnected = Date.now();
         this.addDiscoveredServer(server);
+        console.log(`Servidor ativo: ${server.ip}:${server.port} (${server.name})`);
         return true;
       }
     } catch (error) {
       // Servidor não está respondendo
+      console.log(`Servidor inativo: ${server.ip}:${server.port}`);
     }
     
     return false;
@@ -276,13 +321,22 @@ class DiscoveryService {
     this.manualServers = this.manualServers.filter(s => 
       !(s.ip === ip && s.port === port));
     
+    // Remover da lista de servidores descobertos se for manual
+    this.discoveredServers = this.discoveredServers.filter(s => 
+      !(s.ip === ip && s.port === port && s.manual));
+    
     // Salvar servidores manuais
     this.saveManualServers();
   }
 
   // Obter todos os servidores descobertos
   public getDiscoveredServers(): ServerInfo[] {
-    return [...this.discoveredServers];
+    return [...this.discoveredServers].sort((a, b) => {
+      // Ordenar por último conectado (mais recente primeiro)
+      const aTime = a.lastConnected || 0;
+      const bTime = b.lastConnected || 0;
+      return bTime - aTime;
+    });
   }
 
   // Obter servidores manuais
@@ -314,6 +368,11 @@ class DiscoveryService {
       const savedServers = await AsyncStorage.getItem(STORAGE_SERVER_INFO);
       if (savedServers) {
         this.manualServers = JSON.parse(savedServers);
+        
+        // Adicionar à lista de servidores descobertos
+        for (const server of this.manualServers) {
+          this.addDiscoveredServer(server);
+        }
       }
       
       // Carregar último servidor usado

@@ -1,0 +1,271 @@
+[2025-03-27 16:52:20.030] INFO  [logger.go:171]: Logging iniciado
+[2025-03-27 16:52:20.031] INFO  [main.go:31]: Iniciando SICK Radar Monitor
+[2025-03-27 16:52:20.031] INFO  [main.go:39]: Configuração carregada: Radar em 192.168.1.84:2111, Redis em localhost:6379
+[2025-03-27 16:52:20.036] INFO  [hub.go:54]: Iniciando WebSocket Hub
+[2025-03-27 16:52:20.042] INFO  [service.go:91]: Conexão com o Redis estabelecida. Resposta: PONG
+[2025-03-27 16:52:20.042] INFO  [main.go:50]: Servidor iniciado na porta 8080
+[2025-03-27 16:52:20.070] INFO  [service.go:92]: Serviço de descoberta iniciado em 169.254.83.107:8080 (mDNS: AutomacaoRLS-radar._sickradar._tcp)
+[2025-03-27 16:52:20.071] INFO  [service.go:73]: Iniciando serviço do radar (host: 192.168.1.84, porta: 2111)
+[2025-03-27 16:52:20.072] INFO  [server.go:217]: ===============================================
+[2025-03-27 16:52:20.072] INFO  [server.go:218]:             SICK Radar Monitor Server          
+[2025-03-27 16:52:20.072] INFO  [server.go:219]: ===============================================
+[2025-03-27 16:52:20.072] INFO  [server.go:220]: Versão: 1.0.0
+[2025-03-27 16:52:20.073] INFO  [server.go:221]: Endereço IP: 169.254.83.107
+[2025-03-27 16:52:20.073] INFO  [server.go:222]: Porta HTTP: 8080
+[2025-03-27 16:52:20.073] INFO  [server.go:223]: WebSocket URL: ws://169.254.83.107:8080/ws
+[2025-03-27 16:52:20.073] INFO  [server.go:224]: API URL: http://169.254.83.107:8080/api
+[2025-03-27 16:52:20.074] INFO  [server.go:225]: mDNS: AutomacaoRLS-radar._sickradar._tcp.local.
+[2025-03-27 16:52:20.074] INFO  [server.go:229]: ===============================================
+[2025-03-27 16:52:20.074] INFO  [server.go:230]: Servidor pronto para conexões!
+[2025-03-27 16:52:20.074] INFO  [server.go:146]: Iniciando servidor HTTP na porta 8080
+[2025-03-27 16:53:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 16:54:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 16:55:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 16:56:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 16:57:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 16:58:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 16:59:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:00:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:01:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:02:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:03:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:04:20.036] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:05:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:06:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:06:48.358] INFO  [routes.go:227]: GET /api 169.254.83.107%Tailscale:51979
+[2025-03-27 17:06:48.358] DEBUG [routes.go:234]: Requisição GET /api completada em 0s
+[2025-03-27 17:06:48.557] INFO  [routes.go:227]: GET /favicon.ico 169.254.83.107%Tailscale:51979
+[2025-03-27 17:06:48.557] DEBUG [routes.go:234]: Requisição GET /favicon.ico completada em 0s
+[2025-03-27 17:07:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:08:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 0 clientes conectados
+[2025-03-27 17:08:33.487] INFO  [routes.go:227]: GET /api/discover 192.168.1.67:52041
+[2025-03-27 17:08:33.487] DEBUG [routes.go:234]: Requisição GET /api/discover completada em 0s
+[2025-03-27 17:08:35.891] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52042
+[2025-03-27 17:08:35.892] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52042 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:35.892] DEBUG [routes.go:234]: Requisição GET /ws completada em 577.3µs
+[2025-03-27 17:08:35.892] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 90643e13-78d3-44a4-a210-9d02f3e83a35. Total: 1
+[2025-03-27 17:08:40.604] INFO  [hub.go:182]: Comando recebido do cliente 90643e13-78d3-44a4-a210-9d02f3e83a35: get_status
+[2025-03-27 17:08:40.616] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:40.622] DEBUG [routes.go:234]: Requisição GET /api/status completada em 5.9837ms
+[2025-03-27 17:08:40.624] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:40.626] DEBUG [routes.go:234]: Requisição GET /api/current completada em 1.6952ms
+[2025-03-27 17:08:46.708] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 90643e13-78d3-44a4-a210-9d02f3e83a35. Total: 0
+[2025-03-27 17:08:46.793] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52054
+[2025-03-27 17:08:46.793] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52054 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:46.793] DEBUG [routes.go:234]: Requisição GET /ws completada em 506.6µs
+[2025-03-27 17:08:46.793] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: ace32b88-2347-419d-9035-340dec0fa84f. Total: 1
+[2025-03-27 17:08:46.817] INFO  [hub.go:182]: Comando recebido do cliente ace32b88-2347-419d-9035-340dec0fa84f: get_status
+[2025-03-27 17:08:46.826] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:46.827] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.0853ms
+[2025-03-27 17:08:46.834] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:46.836] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.2677ms
+[2025-03-27 17:08:47.612] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: ace32b88-2347-419d-9035-340dec0fa84f. Total: 0
+[2025-03-27 17:08:47.660] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52058
+[2025-03-27 17:08:47.661] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52058 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:47.661] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 98f51a80-9702-44ad-b252-bc2629d76191. Total: 1
+[2025-03-27 17:08:47.661] DEBUG [routes.go:234]: Requisição GET /ws completada em 518.6µs
+[2025-03-27 17:08:47.682] INFO  [hub.go:182]: Comando recebido do cliente 98f51a80-9702-44ad-b252-bc2629d76191: get_status
+[2025-03-27 17:08:47.692] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:47.692] DEBUG [routes.go:234]: Requisição GET /api/status completada em 505.7µs
+[2025-03-27 17:08:47.698] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:47.700] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.2135ms
+[2025-03-27 17:08:48.196] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 98f51a80-9702-44ad-b252-bc2629d76191. Total: 0
+[2025-03-27 17:08:48.256] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52061
+[2025-03-27 17:08:48.256] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52061 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:48.256] DEBUG [routes.go:234]: Requisição GET /ws completada em 503.9µs
+[2025-03-27 17:08:48.256] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: d08a9ccd-75ed-4cc1-a8d3-b996d7916b84. Total: 1
+[2025-03-27 17:08:48.274] INFO  [hub.go:182]: Comando recebido do cliente d08a9ccd-75ed-4cc1-a8d3-b996d7916b84: get_status
+[2025-03-27 17:08:48.281] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:48.282] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.1042ms
+[2025-03-27 17:08:48.289] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:48.291] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.3363ms
+[2025-03-27 17:08:48.637] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: d08a9ccd-75ed-4cc1-a8d3-b996d7916b84. Total: 0
+[2025-03-27 17:08:48.687] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52064
+[2025-03-27 17:08:48.687] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52064 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:48.687] DEBUG [routes.go:234]: Requisição GET /ws completada em 505µs
+[2025-03-27 17:08:48.687] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 36becf3d-28bc-4ca5-952c-a9ce4067178e. Total: 1
+[2025-03-27 17:08:48.708] INFO  [hub.go:182]: Comando recebido do cliente 36becf3d-28bc-4ca5-952c-a9ce4067178e: get_status
+[2025-03-27 17:08:48.715] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:48.715] DEBUG [routes.go:234]: Requisição GET /api/status completada em 504.5µs
+[2025-03-27 17:08:48.722] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:48.724] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.3325ms
+[2025-03-27 17:08:48.963] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 36becf3d-28bc-4ca5-952c-a9ce4067178e. Total: 0
+[2025-03-27 17:08:49.022] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52067
+[2025-03-27 17:08:49.023] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52067 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:49.023] DEBUG [routes.go:234]: Requisição GET /ws completada em 505.4µs
+[2025-03-27 17:08:49.023] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 71d7ae7c-852a-4075-96a7-05979e508449. Total: 1
+[2025-03-27 17:08:49.041] INFO  [hub.go:182]: Comando recebido do cliente 71d7ae7c-852a-4075-96a7-05979e508449: get_status
+[2025-03-27 17:08:49.049] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:49.051] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.0579ms
+[2025-03-27 17:08:49.057] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:49.059] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.1634ms
+[2025-03-27 17:08:49.260] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 71d7ae7c-852a-4075-96a7-05979e508449. Total: 0
+[2025-03-27 17:08:49.307] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52069
+[2025-03-27 17:08:49.307] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52069 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:49.308] DEBUG [routes.go:234]: Requisição GET /ws completada em 1.0618ms
+[2025-03-27 17:08:49.308] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: ee35bf2c-ffb3-49cb-9d54-031b56dd38df. Total: 1
+[2025-03-27 17:08:49.326] INFO  [hub.go:182]: Comando recebido do cliente ee35bf2c-ffb3-49cb-9d54-031b56dd38df: get_status
+[2025-03-27 17:08:49.343] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:49.345] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.4965ms
+[2025-03-27 17:08:49.350] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:49.352] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.2674ms
+[2025-03-27 17:08:49.517] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: ee35bf2c-ffb3-49cb-9d54-031b56dd38df. Total: 0
+[2025-03-27 17:08:49.572] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52071
+[2025-03-27 17:08:49.573] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52071 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:08:49.573] DEBUG [routes.go:234]: Requisição GET /ws completada em 1.0405ms
+[2025-03-27 17:08:49.573] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 61147bf2-f8a7-4604-9514-0f945c3fbb51. Total: 1
+[2025-03-27 17:08:49.592] INFO  [hub.go:182]: Comando recebido do cliente 61147bf2-f8a7-4604-9514-0f945c3fbb51: get_status
+[2025-03-27 17:08:49.600] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:49.601] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.1695ms
+[2025-03-27 17:08:49.607] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:49.609] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.1962ms
+[2025-03-27 17:08:50.300] INFO  [routes.go:227]: GET /api/velocity-changes 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:50.310] DEBUG [routes.go:234]: Requisição GET /api/velocity-changes completada em 9.2287ms
+[2025-03-27 17:08:51.616] INFO  [hub.go:182]: Comando recebido do cliente 61147bf2-f8a7-4604-9514-0f945c3fbb51: get_history
+[2025-03-27 17:08:51.618] INFO  [routes.go:227]: GET /api/velocity-history/4 169.254.83.107%Tailscale:52044
+[2025-03-27 17:08:51.619] DEBUG [routes.go:234]: Requisição GET /api/velocity-history/4 completada em 730.5µs
+[2025-03-27 17:09:08.347] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 61147bf2-f8a7-4604-9514-0f945c3fbb51. Total: 0
+[2025-03-27 17:09:08.409] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52077
+[2025-03-27 17:09:08.409] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52077 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:09:08.409] DEBUG [routes.go:234]: Requisição GET /ws completada em 503.8µs
+[2025-03-27 17:09:08.409] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: c1be7711-17e2-4313-8dc8-ccaf03c4efb2. Total: 1
+[2025-03-27 17:09:08.430] INFO  [hub.go:182]: Comando recebido do cliente c1be7711-17e2-4313-8dc8-ccaf03c4efb2: get_status
+[2025-03-27 17:09:08.438] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:09:08.439] DEBUG [routes.go:234]: Requisição GET /api/status completada em 636.3µs
+[2025-03-27 17:09:08.445] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:09:08.449] DEBUG [routes.go:234]: Requisição GET /api/current completada em 3.35ms
+[2025-03-27 17:09:12.696] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: c1be7711-17e2-4313-8dc8-ccaf03c4efb2. Total: 0
+[2025-03-27 17:09:12.755] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52080
+[2025-03-27 17:09:12.755] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52080 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:09:12.755] DEBUG [routes.go:234]: Requisição GET /ws completada em 505.5µs
+[2025-03-27 17:09:12.755] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: cfea4d68-5719-443c-817f-51f43e54241c. Total: 1
+[2025-03-27 17:09:12.776] INFO  [hub.go:182]: Comando recebido do cliente cfea4d68-5719-443c-817f-51f43e54241c: get_status
+[2025-03-27 17:09:12.783] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52044
+[2025-03-27 17:09:12.784] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.0301ms
+[2025-03-27 17:09:12.790] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52044
+[2025-03-27 17:09:12.792] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.3781ms
+[2025-03-27 17:09:15.084] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: cfea4d68-5719-443c-817f-51f43e54241c. Total: 0
+[2025-03-27 17:09:17.362] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52097
+[2025-03-27 17:09:17.362] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52097 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:09:17.363] DEBUG [routes.go:234]: Requisição GET /ws completada em 1.0723ms
+[2025-03-27 17:09:17.363] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 7c494e57-eda0-4a82-9a09-c9cfb7f14ed4. Total: 1
+[2025-03-27 17:09:17.410] INFO  [hub.go:182]: Comando recebido do cliente 7c494e57-eda0-4a82-9a09-c9cfb7f14ed4: get_status
+[2025-03-27 17:09:17.441] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52098
+[2025-03-27 17:09:17.443] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.6518ms
+[2025-03-27 17:09:17.453] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52098
+[2025-03-27 17:09:17.456] DEBUG [routes.go:234]: Requisição GET /api/current completada em 3.0424ms
+[2025-03-27 17:09:20.036] INFO  [hub.go:113]: Estatísticas WebSocket: 1 clientes conectados
+[2025-03-27 17:09:37.158] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 7c494e57-eda0-4a82-9a09-c9cfb7f14ed4. Total: 0
+[2025-03-27 17:09:37.238] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52115
+[2025-03-27 17:09:37.238] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52115 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:09:37.238] DEBUG [routes.go:234]: Requisição GET /ws completada em 510.2µs
+[2025-03-27 17:09:37.238] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 3d4ffa5e-54a0-4bbe-8170-3dce323ba380. Total: 1
+[2025-03-27 17:09:37.255] INFO  [hub.go:182]: Comando recebido do cliente 3d4ffa5e-54a0-4bbe-8170-3dce323ba380: get_status
+[2025-03-27 17:09:37.263] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52098
+[2025-03-27 17:09:37.264] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.2186ms
+[2025-03-27 17:09:37.271] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52098
+[2025-03-27 17:09:37.274] DEBUG [routes.go:234]: Requisição GET /api/current completada em 3.8478ms
+[2025-03-27 17:10:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 1 clientes conectados
+[2025-03-27 17:10:39.502] INFO  [routes.go:227]: GET /ws 127.0.0.1:52137
+[2025-03-27 17:10:39.503] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52138
+[2025-03-27 17:10:39.503] INFO  [handler.go:63]: Nova conexão WebSocket de 127.0.0.1:52137 ()
+[2025-03-27 17:10:39.503] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 504.2µs
+[2025-03-27 17:10:39.504] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 3b1671e0-dcfc-4006-ab10-b0fedbf204cc. Total: 2
+[2025-03-27 17:10:39.503] DEBUG [routes.go:234]: Requisição GET /ws completada em 782.5µs
+[2025-03-27 17:10:42.509] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52140
+[2025-03-27 17:10:42.509] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 360.7µs
+[2025-03-27 17:10:45.515] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52141
+[2025-03-27 17:10:45.516] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 1.0418ms
+[2025-03-27 17:10:48.529] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52142
+[2025-03-27 17:10:48.529] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 0s
+[2025-03-27 17:10:48.881] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 3d4ffa5e-54a0-4bbe-8170-3dce323ba380. Total: 1
+[2025-03-27 17:10:48.973] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52149
+[2025-03-27 17:10:48.973] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52149 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:10:48.973] DEBUG [routes.go:234]: Requisição GET /ws completada em 557.8µs
+[2025-03-27 17:10:48.973] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: b15c8be0-5a52-49f2-ade1-fbf6cba7f014. Total: 2
+[2025-03-27 17:10:49.005] INFO  [hub.go:182]: Comando recebido do cliente b15c8be0-5a52-49f2-ade1-fbf6cba7f014: get_status
+[2025-03-27 17:10:49.019] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52098
+[2025-03-27 17:10:49.021] DEBUG [routes.go:234]: Requisição GET /api/status completada em 2.1237ms
+[2025-03-27 17:10:49.032] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52098
+[2025-03-27 17:10:49.036] DEBUG [routes.go:234]: Requisição GET /api/current completada em 3.8207ms
+[2025-03-27 17:10:50.407] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: b15c8be0-5a52-49f2-ade1-fbf6cba7f014. Total: 1
+[2025-03-27 17:10:50.462] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52153
+[2025-03-27 17:10:50.463] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52153 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:10:50.463] DEBUG [routes.go:234]: Requisição GET /ws completada em 1.1892ms
+[2025-03-27 17:10:50.463] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: a331b14e-d456-4fef-b3c1-d570abd533cd. Total: 2
+[2025-03-27 17:10:50.490] INFO  [hub.go:182]: Comando recebido do cliente a331b14e-d456-4fef-b3c1-d570abd533cd: get_status
+[2025-03-27 17:10:50.503] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52098
+[2025-03-27 17:10:50.504] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.3281ms
+[2025-03-27 17:10:50.515] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52098
+[2025-03-27 17:10:50.518] DEBUG [routes.go:234]: Requisição GET /api/current completada em 2.9389ms
+[2025-03-27 17:10:51.535] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52155
+[2025-03-27 17:10:51.536] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 503µs
+[2025-03-27 17:10:54.545] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52157
+[2025-03-27 17:10:54.546] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 505.2µs
+[2025-03-27 17:10:57.561] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52158
+[2025-03-27 17:10:57.562] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 538.2µs
+[2025-03-27 17:11:00.575] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52159
+[2025-03-27 17:11:00.575] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 0s
+[2025-03-27 17:11:03.580] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52161
+[2025-03-27 17:11:03.580] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 0s
+[2025-03-27 17:11:06.593] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52162
+[2025-03-27 17:11:06.594] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 503.8µs
+[2025-03-27 17:11:09.598] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52164
+[2025-03-27 17:11:09.598] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 605.3µs
+[2025-03-27 17:11:12.615] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52165
+[2025-03-27 17:11:12.616] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 509.7µs
+[2025-03-27 17:11:15.631] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52166
+[2025-03-27 17:11:15.632] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 662.6µs
+[2025-03-27 17:11:18.637] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52167
+[2025-03-27 17:11:18.637] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 525.9µs
+[2025-03-27 17:11:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:11:21.655] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52168
+[2025-03-27 17:11:21.655] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 0s
+[2025-03-27 17:11:24.658] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52177
+[2025-03-27 17:11:24.659] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 531µs
+[2025-03-27 17:11:27.666] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52180
+[2025-03-27 17:11:27.667] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 845.5µs
+[2025-03-27 17:11:30.684] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52181
+[2025-03-27 17:11:30.685] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 585.5µs
+[2025-03-27 17:11:33.695] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52188
+[2025-03-27 17:11:33.695] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 506.2µs
+[2025-03-27 17:11:36.706] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52189
+[2025-03-27 17:11:36.707] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 505.8µs
+[2025-03-27 17:11:39.711] INFO  [routes.go:227]: GET /ws/monitoring 127.0.0.1:52191
+[2025-03-27 17:11:39.711] DEBUG [routes.go:234]: Requisição GET /ws/monitoring completada em 0s
+[2025-03-27 17:12:11.858] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: a331b14e-d456-4fef-b3c1-d570abd533cd. Total: 1
+[2025-03-27 17:12:13.321] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52216
+[2025-03-27 17:12:13.322] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52216 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:12:13.322] DEBUG [routes.go:234]: Requisição GET /ws completada em 1.0415ms
+[2025-03-27 17:12:13.322] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 0d0064f4-6f28-4dea-9f23-f31a29ec9e12. Total: 2
+[2025-03-27 17:12:13.362] INFO  [hub.go:182]: Comando recebido do cliente 0d0064f4-6f28-4dea-9f23-f31a29ec9e12: get_status
+[2025-03-27 17:12:13.383] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52098
+[2025-03-27 17:12:13.384] DEBUG [routes.go:234]: Requisição GET /api/status completada em 820.8µs
+[2025-03-27 17:12:13.392] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52098
+[2025-03-27 17:12:13.395] DEBUG [routes.go:234]: Requisição GET /api/current completada em 3.2496ms
+[2025-03-27 17:12:16.332] INFO  [routes.go:227]: GET /api/velocity-changes 169.254.83.107%Tailscale:52098
+[2025-03-27 17:12:16.340] DEBUG [routes.go:234]: Requisição GET /api/velocity-changes completada em 7.6357ms
+[2025-03-27 17:12:17.546] INFO  [hub.go:182]: Comando recebido do cliente 0d0064f4-6f28-4dea-9f23-f31a29ec9e12: get_history
+[2025-03-27 17:12:17.548] INFO  [routes.go:227]: GET /api/velocity-history/7 169.254.83.107%Tailscale:52098
+[2025-03-27 17:12:17.549] DEBUG [routes.go:234]: Requisição GET /api/velocity-history/7 completada em 880.3µs
+[2025-03-27 17:12:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:13:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:14:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:14:34.970] INFO  [hub.go:86]: Cliente WebSocket desconectado. ID: 0d0064f4-6f28-4dea-9f23-f31a29ec9e12. Total: 1
+[2025-03-27 17:14:35.944] INFO  [routes.go:227]: GET /ws 169.254.83.107%Tailscale:52299
+[2025-03-27 17:14:35.944] INFO  [handler.go:63]: Nova conexão WebSocket de 169.254.83.107%Tailscale:52299 (Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0)
+[2025-03-27 17:14:35.945] DEBUG [routes.go:234]: Requisição GET /ws completada em 1.0738ms
+[2025-03-27 17:14:35.945] INFO  [hub.go:73]: Novo cliente WebSocket conectado. ID: 515a9564-38ce-493c-be4f-ccd3ddfc5bfe. Total: 2
+[2025-03-27 17:14:35.991] INFO  [hub.go:182]: Comando recebido do cliente 515a9564-38ce-493c-be4f-ccd3ddfc5bfe: get_status
+[2025-03-27 17:14:36.016] INFO  [routes.go:227]: GET /api/status 169.254.83.107%Tailscale:52302
+[2025-03-27 17:14:36.017] DEBUG [routes.go:234]: Requisição GET /api/status completada em 1.0354ms
+[2025-03-27 17:14:36.026] INFO  [routes.go:227]: GET /api/current 169.254.83.107%Tailscale:52302
+[2025-03-27 17:14:36.029] DEBUG [routes.go:234]: Requisição GET /api/current completada em 3.6835ms
+[2025-03-27 17:15:20.036] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:16:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:17:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados
+[2025-03-27 17:17:55.406] INFO  [main.go:61]: Desligando servidor...
+[2025-03-27 17:17:55.406] INFO  [server.go:156]: Iniciando shutdown do servidor
+[2025-03-27 17:17:55.408] INFO  [service.go:115]: Serviço de descoberta parado
+[2025-03-27 17:17:55.408] INFO  [service.go:91]: Parando serviço do radar
+[2025-03-27 17:18:20.037] INFO  [hub.go:113]: Estatísticas WebSocket: 2 clientes conectados

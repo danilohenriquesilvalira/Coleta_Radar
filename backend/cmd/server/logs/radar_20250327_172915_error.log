@@ -1,0 +1,20 @@
+[2025-03-27 17:30:16.259] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 67b2a94f-77e8-4b35-a287-dd2ed9803319: json: unknown field "time"
+[2025-03-27 17:30:27.269] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:31:02.253] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 6fae0fef-7999-4b67-a9c1-b3ecdf0213a0: json: unknown field "time"
+[2025-03-27 17:31:13.255] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:31:47.267] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente ac755296-6fbd-4dd8-9006-7e9a2898b170: json: unknown field "time"
+[2025-03-27 17:31:58.267] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:32:32.266] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 341203b3-f0b5-4cf5-9aea-327c7d361956: json: unknown field "time"
+[2025-03-27 17:32:42.266] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:33:16.264] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente fc96f1ac-1948-40c7-a2c7-011f742da189: json: unknown field "time"
+[2025-03-27 17:33:27.259] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:34:02.257] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 170e6a28-1317-4f83-b1e0-2239876c6e4a: json: unknown field "time"
+[2025-03-27 17:34:13.256] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:34:48.267] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 857a08a6-041e-451a-878c-51355476768b: json: unknown field "time"
+[2025-03-27 17:34:59.275] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:35:34.260] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 28dd7881-49e5-468c-9b87-90c9924ce3f8: json: unknown field "time"
+[2025-03-27 17:35:45.267] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:36:20.255] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 1372a84f-c28d-4d60-aedc-3379b9d06c39: json: unknown field "time"
+[2025-03-27 17:36:31.271] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
+[2025-03-27 17:37:06.260] ERROR [client.go:147]: Erro ao decodificar mensagem do cliente 85075430-0b30-4795-aaf2-83133e4a9b39: json: unknown field "time"
+[2025-03-27 17:37:17.268] ERROR [client.go:86]: Erro de leitura WebSocket: websocket: close 1005 (no status)
